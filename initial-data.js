@@ -18,7 +18,6 @@ module.exports = async (keystone) => {
 
   if (count === 0) {
     const password = randomString();
-    console.log(password);
     const email = "admin@example.com";
 
     const { errors } = await keystone.executeGraphQL({

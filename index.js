@@ -106,4 +106,7 @@ module.exports = {
       authStrategy,
     }),
   ],
+  configureExpress: (app) => {
+    app.set("trust proxy"), 1;
+  },
 };
