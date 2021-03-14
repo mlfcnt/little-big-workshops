@@ -9,11 +9,6 @@ const { MongooseAdapter: Adapter } = require("@keystonejs/adapter-mongoose");
 
 const adapterConfig = {
   mongoUri: process.env.DATABASE_URL,
-  onConnect: process.env.CREATE_TABLES !== "true" && initialiseData,
-  cookie: {
-    secure: true,
-  },
-  cookieSecret: "very-very-very-secret",
 };
 
 const PROJECT_NAME = "Little Big Workshops";
@@ -21,6 +16,10 @@ const PROJECT_NAME = "Little Big Workshops";
 const keystone = new Keystone({
   adapter: new Adapter(adapterConfig),
   onConnect: process.env.CREATE_TABLES !== "true" && initialiseData,
+  cookie: {
+    secure: true,
+  },
+  cookieSecret: "very-very-very-secret",
 });
 
 // Access control functions
