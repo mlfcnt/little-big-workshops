@@ -17,7 +17,7 @@
     "create-tables": "cross-env CREATE_TABLES=true keystone create-tables"
   },
   "dependencies": {
-    "@keystonejs/adapter-knex": "^13.2.0",
+    "@keystonejs/adapter-mongoose": "^11.2.0",
     "@keystonejs/app-admin-ui": "^7.4.1",
     "@keystonejs/app-graphql": "^6.2.2",
     "@keystonejs/app-static": "^5.2.0",

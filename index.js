@@ -1,28 +1,26 @@
 const { Keystone } = require("@keystonejs/keystone");
 const { PasswordAuthStrategy } = require("@keystonejs/auth-password");
-const { Text, Checkbox, Password, DateTime } = require("@keystonejs/fields");
+const { Text, Checkbox, Password } = require("@keystonejs/fields");
 const { GraphQLApp } = require("@keystonejs/app-graphql");
 const { AdminUIApp } = require("@keystonejs/app-admin-ui");
 const initialiseData = require("./initial-data");
 const { StaticApp } = require("@keystonejs/app-static");
+const { MongooseAdapter: Adapter } = require("@keystonejs/adapter-mongoose");
 
-const { KnexAdapter: Adapter } = require("@keystonejs/adapter-knex");
-const PROJECT_NAME = "Little Big Workshops";
 const adapterConfig = {
-  knexOptions: {
-    connection:
-      process.env.DATABASE_URL ||
-      "postgres://tmn:longdong@localhost/littlebigworkshops",
-  },
-};
-
-const keystone = new Keystone({
-  adapter: new Adapter(adapterConfig),
+  mongoUri: process.env.DATABASE_URL,
   onConnect: process.env.CREATE_TABLES !== "true" && initialiseData,
   cookie: {
     secure: true,
   },
   cookieSecret: "very-very-very-secret",
+};
+
+const PROJECT_NAME = "Little Big Workshops";
+
+const keystone = new Keystone({
+  adapter: new Adapter(adapterConfig),
+  onConnect: process.env.CREATE_TABLES !== "true" && initialiseData,
 });
 
 // Access control functions
