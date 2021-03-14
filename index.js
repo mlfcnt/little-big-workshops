@@ -5,16 +5,15 @@ const { GraphQLApp } = require("@keystonejs/app-graphql");
 const { AdminUIApp } = require("@keystonejs/app-admin-ui");
 const initialiseData = require("./initial-data");
 const { StaticApp } = require("@keystonejs/app-static");
-const { MongooseAdapter: Adapter } = require("@keystonejs/adapter-mongoose");
-
-const adapterConfig = {
-  mongoUri: process.env.DATABASE_URL,
-};
-
-const PROJECT_NAME = "Little Big Workshops";
+const { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
+const { NextApp } = require("@keystonejs/app-next");
 
 const keystone = new Keystone({
-  adapter: new Adapter(adapterConfig),
+  adapter: new MongooseAdapter({
+    mongoUri:
+      process.env.DATABASE_URL ||
+      "mongodb+srv://TMN:aygJntTk4ui90jPn@cluster0.tfro5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  }),
   onConnect: process.env.CREATE_TABLES !== "true" && initialiseData,
   cookie: {
     secure: true,
@@ -99,13 +98,14 @@ module.exports = {
   keystone,
   apps: [
     new GraphQLApp(),
-    new StaticApp({ path: "/", src: "public" }),
     new AdminUIApp({
-      name: PROJECT_NAME,
-      enableDefaultRoute: true,
+      name: "Little Big Workshops",
+      adminPath: "/admin",
       authStrategy,
     }),
+    new NextApp({ dir: "app" }),
   ],
+  distDir: "dist",
   configureExpress: (app) => {
     app.set("trust proxy", 1);
   },
