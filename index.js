@@ -99,7 +99,7 @@ module.exports = {
   keystone,
   apps: [
     new GraphQLApp(),
-    new StaticApp({ path: "/", src: "public", fallback: "index.html" }),
+    new StaticApp({ path: "/", src: "public" }),
     new AdminUIApp({
       name: PROJECT_NAME,
       enableDefaultRoute: true,
