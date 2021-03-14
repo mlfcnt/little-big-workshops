@@ -99,7 +99,7 @@ module.exports = {
   keystone,
   apps: [
     new GraphQLApp(),
-    new StaticApp({ path: "/", src: "public" }),
+    new StaticApp({ path: "/", src: "public", fallback: "index.html" }),
     new AdminUIApp({
       name: PROJECT_NAME,
       enableDefaultRoute: true,
@@ -107,6 +107,6 @@ module.exports = {
     }),
   ],
   configureExpress: (app) => {
-    app.set("trust proxy"), 1;
+    app.set("trust proxy", 1);
   },
 };
