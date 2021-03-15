@@ -10,9 +10,7 @@ const { NextApp } = require("@keystonejs/app-next");
 
 const keystone = new Keystone({
   adapter: new MongooseAdapter({
-    mongoUri:
-      process.env.DATABASE_URL ||
-      "mongodb+srv://TMN:aygJntTk4ui90jPn@cluster0.tfro5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    mongoUri: process.env.DATABASE_URL,
   }),
   onConnect: process.env.CREATE_TABLES !== "true" && initialiseData,
   cookie: {
