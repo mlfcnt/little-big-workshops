@@ -16,7 +16,7 @@ const keystone = new Keystone({
   cookie: {
     secure: true,
   },
-  cookieSecret: "very-very-very-secret",
+  cookieSecret: process.env.COOKIE_SECRET,
 });
 
 // Access control functions
