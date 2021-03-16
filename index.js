@@ -4,7 +4,6 @@ const { Text, Checkbox, Password } = require("@keystonejs/fields");
 const { GraphQLApp } = require("@keystonejs/app-graphql");
 const { AdminUIApp } = require("@keystonejs/app-admin-ui");
 const initialiseData = require("./initial-data");
-const { StaticApp } = require("@keystonejs/app-static");
 const { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
 const { NextApp } = require("@keystonejs/app-next");
 

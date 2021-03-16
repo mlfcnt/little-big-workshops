@@ -1,13 +1,13 @@
-import { useMutation, useQuery, QueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { graphql } from ".";
-import { ADD_WORKSHOP, GET_WORKSHOPS } from "./queries";
-
-const queryClient = new QueryClient();
+import { GET_WORKSHOPS } from "./queries";
 
 const fetchWorkshops = () => graphql(GET_WORKSHOPS);
 
 export const useWorkshops = () => {
-  const { isLoading, data, error } = useQuery("workshops", fetchWorkshops);
+  const { isLoading, data, error } = useQuery("workshops", fetchWorkshops, {
+    cacheTime: 30000,
+  });
 
   return {
     isLoading,
@@ -15,8 +15,3 @@ export const useWorkshops = () => {
     error,
   };
 };
-
-export const useCreateWorkshop = (name) =>
-  useMutation(() => graphql(ADD_WORKSHOP, { name }), {
-    onSuccess: () => queryClient.refetchQueries("workshops"),
-  });

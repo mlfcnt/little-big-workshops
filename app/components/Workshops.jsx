@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { useCreateWorkshop, useWorkshops } from "../lib/api";
+import { useMutation, useQueryClient } from "react-query";
+import { graphql } from "../lib";
+import { useWorkshops } from "../lib/api";
+import { ADD_WORKSHOP } from "../lib/queries";
 
 const Workshops = () => {
   const [newWorkshop, setNewWorkshop] = useState("");
@@ -9,12 +12,20 @@ const Workshops = () => {
     error,
   } = useWorkshops();
 
-  const mutation = useCreateWorkshop(newWorkshop);
+  const queryClient = useQueryClient();
 
-  const handleSumbit = (e) => {
+  const mutation = useMutation(({ name }) => graphql(ADD_WORKSHOP, { name }), {
+    onSuccess: () => {
+      setNewWorkshop("");
+      queryClient.refetchQueries("workshops");
+    },
+  });
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate();
-    setNewWorkshop("");
+    mutation.mutate({
+      name: newWorkshop,
+    });
   };
 
   return (
@@ -22,7 +33,7 @@ const Workshops = () => {
       <p className="intro-text">Vous pouvez faire vos demandes ici</p>
       <div className="form-wrapper">
         <div>
-          <form className="js-add-todo-form" onSubmit={handleSumbit}>
+          <form className="js-add-todo-form" onSubmit={handleSubmit}>
             <input
               required
               name="add-item"
